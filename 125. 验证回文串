@@ -1,0 +1,6 @@
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        import re
+        res = re.findall("[a-z|A-Z|0-9]+",s)
+        res = ''.join(res).lower()
+        return res == res[::-1]
