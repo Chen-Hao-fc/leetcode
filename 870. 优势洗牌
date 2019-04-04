@@ -1,0 +1,47 @@
+# class Solution:
+#这个方法就是将A排序然后循环B，从A中找到比B[i]大的最小的，用二分搜索找，但是还是超过时间了
+#     def advantageCount(self, A, B):
+#         A.sort()
+#         res = []
+#         for i in range(len(B)):
+#             # print("i=",i)
+#             point = self.binary(A,B[i])
+#             if point>B[i]:
+#                 res.append(point)
+#                 A.remove(point)
+#             else:
+#                 res.append(A[0])
+#                 A.remove(A[0])
+#         return res
+            
+#     def binary(self,A,key):
+#         if len(A) == 1:
+#             return A[0]
+#         left = 0
+#         right = len(A)-1
+#         while right-left!=1:
+#             mid = (left+right)//2
+#             if A[mid] <= key:
+#                 left = mid
+#             else :
+#                 right = mid
+#         return A[left] if A[left]>key else A[right]
+
+class Solution:
+    def advantageCount(self, A, B):
+        sortedA = sorted(A)
+        sortedB = sorted(B)
+        resB = {b:[] for b in sortedB}  #对b中每个元素构建一个字典。
+        candiate = []
+        i = 0
+        for e in sortedA:  #循环排序后的A中的元素，
+            if e>sortedB[i]:
+                resB[sortedB[i]].append(e)#当前e的是sortedA没有被派遣的最小的，如果大于sortedB中最小的，就派遣给他。
+                i += 1
+            else:
+                candiate.append(e)#如果当前sortedA中最小的e不能大于sortedB中最小的，则就代表它不能大约sortedB中剩下的任何一个，所
+                                  #它最后用做下等马就行了
+        return [resB[i].pop() if resB[i] else candiate.pop() for i in B]
+    
+    
+        
