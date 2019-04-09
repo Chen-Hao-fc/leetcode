@@ -1,0 +1,26 @@
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        
+        subsum = 0
+        begin = 0
+        sum = 0
+        for i in range(len(gas)):
+            sum += gas[i]-cost[i]
+            subsum += gas[i]-cost[i]
+            if subsum < 0:  
+                subsum = 0
+                begin = i+1
+        if sum<0:
+            return -1
+        else:
+            return begin
+        
+'''
+            if subsum < 0:   #这里相当于设置了一个子区域的和，如果这个和小于零了，这说明，
+                                #之前设定的begin不合适了，因为有不能走到的地方了，然后我们接着从新设置新的begin位置，
+                                #这里就是有个问题，就是说，如果索引1的位置subsum还是大于零的，但是加等 到了索引
+                                #5的时候由于出现了一个很大的负数，情况，然后按照我们的程序，begin就从索引6开始算了，
+                              #那么这样的话，是不是说中间的索引2 索引3 索引4都不合适了呢，
+                                #仔细想想确实不合适，因为，假设索引1 subsum是大于等于0的，那么加上后面的几个都没有抗的
+                                #住索引5的，不加的话肯定更扛不住，因此，直接从索引6开始是合理的。
+'''
