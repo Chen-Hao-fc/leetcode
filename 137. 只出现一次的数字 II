@@ -1,0 +1,9 @@
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        a = 0;b = 0
+        for w in nums:
+            a = a^w & ~b    #a^w = w ;b=0 ;w&~0 = w 所以 a = w 
+            b = b^w & ~a    #b^w = w ;a=w ;w&~w = 0 所以 b = 0
+        return a
+    
+    #这道题还是恶心的 参看网址：https://blog.csdn.net/qq_17550379/article/details/83926804
