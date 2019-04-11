@@ -1,0 +1,20 @@
+# class Solution:
+#     # 这里用了异或
+#     def singleNumber(self, nums: List[int]) -> int:
+#         res = 0
+#         for w in nums:
+#             res ^= w
+#         return res
+class Solution:
+    #这里利用哈希
+    def singleNumber(self, nums: List[int]) -> int:
+        dic = {}
+        for w in nums:
+            if w not in dic:
+                dic[w] = 1
+            else:
+                dic[w] += 1
+        for key,val in dic.items():
+            if val == 1:
+                return key
+        
