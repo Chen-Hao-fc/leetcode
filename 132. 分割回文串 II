@@ -1,12 +1,13 @@
 class Solution:
+    
+    #和139的问题差不多，都可以看似找零钱问题，在现有的基础上，向前面找，看有没有可以搞定的，然后再结合当前行不行就ok
     def minCut(self, s: str) -> int:
         dp = [i-1 for i in range(len(s)+1)] #dp[i]表示从s[:i],即从s中的开始到i不包含i的最小分割数目。
         # dp[0] = 0
         for i in range(1,len(s)+1):
-            for j in range(i):
+            for j in range(i):                 
                 # temp = s[j:i]
                 if s[j:i] == s[j:i][::-1]:  #如果从j到i不包括i的字符串是回文串，则就是在dp[j]的基础上再切一刀，也就是+1
                     dp[i] = min(dp[i],dp[j]+1)
         return dp[-1]
-        
    #类似找零钱问题
