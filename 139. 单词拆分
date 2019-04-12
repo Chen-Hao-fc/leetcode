@@ -1,0 +1,30 @@
+# class Solution:
+#     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+#         self.res = False
+#         set_= set(wordDict)
+#         self.helper(s,set_)
+#         return self.res
+#     def helper(self,s,set_):
+#         # print("s=",s)
+#         if len(s) == 0:
+#             self.res = True
+#             return 
+#         for e in set_:
+#             if s.startswith(e):
+#                 self.helper(s[len(e):],set_)
+
+
+#我不知道为啥，我习惯了用递归，一遇到这种题都喜欢用递归，但是
+#一超时一般都是重复计算的问题，因此，用冬天规划可以很好的避免这种超时问题
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        #其实想想和找零钱一样
+        set_ = set(wordDict)
+        res = [0]
+        for i in range(len(s)+1):
+            for j in res:   #这一步，不就是找零钱问题么，在他前面找
+                if s[j:i] in set_:#这个i代表是索引，说的是0-i不包括i的都可以被找到了
+                    res.append(i)
+                    break
+        return res[-1] == len(s)
+        
