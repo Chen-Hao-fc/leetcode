@@ -1,0 +1,16 @@
+class Solution:
+    #这道题超时了
+    def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
+        self.res = []
+        set_= set(wordDict)
+        self.helper(s,set_,[])
+        return self.res
+    def helper(self,s,set_,cur):
+        # print("s=",s)
+        if len(s) == 0:
+            cur = ' '.join(cur)
+            self.res.append(cur)
+            return 
+        for e in set_:
+            if s.startswith(e):
+                self.helper(s[len(e):],set_,cur+[e])
