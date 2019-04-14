@@ -1,0 +1,35 @@
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def detectCycle(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        #这是一个双指针的快慢操作，而且是有一定的逻辑，类似数学公式的推导，想好了公式再做题
+        if not head or not head.next:
+            return None
+        fast = head.next.next
+        low = head.next
+        label = None
+        while low and fast:
+            if low == fast:
+                label = fast
+                break
+            low = low.next
+            if fast.next:
+                fast = fast.next.next
+            else:
+                return None
+        if label:
+            cur = head
+            while cur.val != label.val:
+                cur = cur.next
+                label = label.next
+            return label
+        return None
+        
