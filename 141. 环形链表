@@ -10,10 +10,10 @@ class Solution(object):
         :type head: ListNode
         :rtype: bool
         """
-        if not head:
+        if not head or not head.next:
             return False
-        fast = head.next
-        low = head
+        fast = head.next.next
+        low = head.next
         while low and fast:
             if low == fast:
                 return True
@@ -23,3 +23,4 @@ class Solution(object):
             else:
                 return False
         return False
+        
