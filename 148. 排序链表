@@ -1,0 +1,53 @@
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def sortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        #核心思想，组合排序，但是组合排序的核心思想是，找中间点切分，然后再组合到一起
+        #但是链表的中点寻找起来比较麻烦吧
+        if not head or not head.next:
+            return head
+        mid = self.getmid(head)
+        left = head
+        right = mid.next
+        mid.next = None
+        l = self.sortList(left)
+        r = self.sortList(right)
+        first = ListNode(0)
+        cur = first
+        p = l
+        q = r
+        while p and q:
+            if p.val<q.val:
+                cur.next = p
+                cur = cur.next
+                p = p.next
+            else:
+                cur.next = q
+                cur = cur.next
+                q = q.next
+        while p:
+            cur.next = p
+            cur = cur.next
+            p = p.next
+        while q:
+            cur.next = q
+            cur = cur.next
+            q = q.next
+        return first.next
+        
+    def getmid(self,head):
+        if not head:
+            return head
+        fast = slow = head
+        while fast.next and fast.next.next:
+            slow = slow.next
+            fast = fast.next.next
+        return slow
