@@ -1,0 +1,32 @@
+class Solution(object):
+    def evalRPN(self, tokens):
+        """
+        :type tokens: List[str]
+        :rtype: int
+        """
+        stack = []
+        for e in tokens:
+            # print(e)
+            if e == "+":
+                p1 = int(stack.pop())
+                p2 = int(stack.pop())
+                stack.append(p2+p1)
+            elif e == "*":
+                p1 = int(stack.pop())
+                p2 = int(stack.pop())
+                stack.append(p1*p2)
+            elif e == "/":
+                p1 = int(stack.pop())
+                p2 = int(stack.pop())
+                flag = (p1*p2)>0  #这里之所以为了判断正负号原因在于，存在一个正数除以一个负数向下取整问题。
+                p1 = abs(p1);p2 = abs(p2)  #这里当然也有人用了eval这个函数。
+                temp = p2//p1
+                stack.append(temp if flag else -temp)
+            elif e == "-":
+                p1 = int(stack.pop())
+                p2 = int(stack.pop())
+                stack.append(p2-p1)
+            else:
+                stack.append(e)
+        return int(stack[-1])
+        
