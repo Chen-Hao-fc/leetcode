@@ -1,0 +1,31 @@
+# Definition for a point.
+# class Point(object):
+#     def __init__(self, a=0, b=0):
+#         self.x = a
+#         self.y = b
+class Solution(object):
+    def maxPoints(self, points):
+        """
+        :type points: List[Point]
+        :rtype: int
+        """
+        if len(points) == 0:
+            return 0
+        res = 0
+        for i in range(len(points)):
+            dic = {"inf":0} #"inf"定义为斜率不存在的情况比如说(1,1),(1,5)这两个点的斜率就不存在
+            samepoint = 1   #样本中有重复的，这样的话，这个点要算两次，比如说（0,0），（0,0）都在样本中
+            for j in range(i+1,len(points)):
+                if points[i].x != points[j].x:
+                    temp = (float(points[i].y-points[j].y))/(points[i].x-points[j].x)#还有这里，不清楚Python中/到底是什么说的，
+                    dic[temp] = dic.get(temp,0) + 1                                  #这里和c++中一样，两个整数除完依然是整数
+                    res = max(res,dic[temp])                                         #但是spyder中两个整数除完是小数呀
+                elif points[i].x == points[j].x and points[i].y != points[j].y :
+                    dic["inf"] += 1
+                    res = max(res,dic["inf"])
+                else:
+                    samepoint += 1   #相同的点个数
+            for k,v in dic.items():
+                res = max(res,v+samepoint)  #加point表示，如果没有重复，咋points[i]本身也是直线上一点，如果有重复，则重复加上
+        return res
+    #这道题到最终没有通过，主要是因为有一个大数的问题，在除的时候有问题，
